@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="fokus_cube">
+
+	<xacro:include filename="$(find niels_homeoffice)/urdf/niels_desk.xacro" />
+	<xacro:include filename="$(find niels_homeoffice)/urdf/niels_desk_leg.xacro" />
+
+	<link name="base_link" />
+
+	<xacro:niels_desk prefix="" connected_to="base_link" />
+
+	<xacro:niels_desk_leg prefix="1st_" connected_to="frame_link" connected_to_xyz="-1.0 0.300 0.0" connected_to_rpy="0 0 -1.5708" />
+	<xacro:niels_desk_leg prefix="2nd_" connected_to="frame_link" connected_to_xyz="0.600 0.7 0.0" connected_to_rpy="0 0 3.1416" />
+	<xacro:niels_desk_leg prefix="3rd_" connected_to="frame_link" connected_to_xyz="0.600 -0.7 0.0" connected_to_rpy="0 0 0" />
+
+	<joint name="world_joint" type="fixed">
+		<parent link="base_link" />
+		<child link="frame_link" />
+		<origin xyz="0.0 0.0 1.000" rpy="0.0 0.0 0.0" />
+	</joint>
+</robot>

@@ -1,0 +1,46 @@
+<launch>
+    <param name="/use_sim_time" value="true" />
+  
+    <arg name="debug" default="false" />
+    <arg name="gui" default="true" />
+    <arg name="pause" default="true" />
+    <!--
+    <arg name="world" default="$(find xivt_fokus_cube)/world/fokus_cube.world" />
+    -->
+  
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <!--<arg name="world_name" value="$(arg world)" />-->
+      <arg name="debug" value="$(arg debug)" />
+      <arg name="gui" value="$(arg gui)" />
+      <arg name="paused" value="$(arg pause)" />
+      <arg name="use_sim_time" value="true" />
+    </include>
+  
+    <group ns="desk">
+      <param name="robot_description"
+        command="$(find xacro)/xacro $(find niels_homeoffice)/urdf/niels_desk.urdf.xacro" />
+  
+      <arg name="init_pose" value="-x -1.72750 -y 1.105 -z 0.0" />
+      <arg name="robot_name" value="desk" />
+  
+      <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+        args="$(arg init_pose) -param robot_description -urdf -model $(arg robot_name)" respawn="false" output="screen"/>
+  
+      <node pkg="robot_state_publisher" type="robot_state_publisher"
+        name="robot_state_publisher" output="screen"/>
+    </group>
+
+    <!--
+    <group ns="chair">
+      <param name="robot_description_sdf" textfile="$(find niels_homeoffice)/models/OfficeChairGrey/model.sdf"/>
+      <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-sdf -param robot_description_sdf -model chair -x -2.000 -y 1.000 -z 0.0 -Y 1.5708" />
+    </group>
+    -->
+
+    <group ns="table">
+      <param name="robot_description_sdf" textfile="$(find niels_homeoffice)/models/table/model.sdf"/>
+      <node name="spawn_model" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-sdf -param robot_description_sdf -model table -x 1.36375 -y 1.085 -z 0.0 -Y 1.5708" />
+    </group>
+  </launch>

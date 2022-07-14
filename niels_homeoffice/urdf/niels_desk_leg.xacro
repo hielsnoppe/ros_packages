@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="niels_desk_leg" params="prefix connected_to connected_to_xyz connected_to_rpy">
+
+        <link name="${prefix}upper_limb_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="0.4" />
+                <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+            </inertial>
+            <!--  -->
+            <visual>
+                <origin xyz="0 0.0575 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.095 0.175 0.040" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0.0575 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.095 0.175 0.040" />
+                </geometry>
+            </collision>
+            <!--  -->
+            <visual>
+                <origin xyz="0 0 -0.220" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.070 0.040 0.400" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 -0.220" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.070 0.040 0.400" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="${prefix}lower_limb_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="0.3" />
+                <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+            </inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.075 0.045 0.400" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.075 0.045 0.400" />
+                </geometry>
+            </collision>
+        </link>
+        
+        <link name="${prefix}foot_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="0.3" />
+                <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+            </inertial>
+            <!-- foot -->
+            <visual>
+                <origin xyz="0 0 0.020" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.700 0.070 0.040" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0.020" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.700 0.070 0.040" />
+                </geometry>
+            </collision>
+            <!-- ankle -->
+            <visual>
+                <origin xyz="0 0 0.290" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.080 0.050 0.500" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0.290" rpy="0 0 0" />
+                <geometry>
+                    <box size="0.080 0.050 0.500" />
+                </geometry>
+            </collision>
+        </link>
+
+		<!--Joints -->
+        
+		<joint name="${prefix}hip_joint" type="fixed">
+			<parent link="${connected_to}" />
+			<child link="${prefix}upper_limb_link" />
+			<origin xyz="${connected_to_xyz}" rpy="${connected_to_rpy}" />
+		</joint>
+
+		<joint name="${prefix}knee_joint" type="prismatic">
+			<parent link="${prefix}upper_limb_link" />
+			<child link="${prefix}lower_limb_link" />
+			<origin xyz="0 0 -0.280" rpy="0 0 0" />
+			<axis xyz="0 0 1" />
+			<limit effort="100.0" velocity="3.0" lower="-0.280" upper="0" />
+			<dynamics damping="0.1" friction="0.0" />
+		</joint>
+
+		<joint name="${prefix}ankle_joint" type="prismatic">
+			<parent link="${prefix}lower_limb_link" />
+			<child link="${prefix}foot_link" />
+			<origin xyz="0 0 -0.300" rpy="0 0 0" />
+			<limit effort="100.0" velocity="3.0" lower="-0.280" upper="0" />
+			<axis xyz="0 0 1" />
+			<dynamics damping="0.1" friction="0.0" />
+		</joint>
+
+        <gazebo reference="${prefix}upper_limb_link">
+            <material>Gazebo/Grey</material>
+        </gazebo>
+        <gazebo reference="${prefix}lower_limb_link">
+            <material>Gazebo/Grey</material>
+        </gazebo>
+        <gazebo reference="${prefix}foot_link">
+            <material>Gazebo/Grey</material>
+        </gazebo>
+    </xacro:macro>
+</robot>

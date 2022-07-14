@@ -1,0 +1,170 @@
+<?xml version='1.0'?>
+<sdf version="1.4">
+<!-- Assumed unit length: 1m = 100cm = 1000mm -->
+<!-- inertias are tricky to compute -->
+<!-- http://gazebosim.org/tutorials?tut=inertia&cat=build_robot -->
+  <model name="table">
+    <static>true</static>
+
+    <link name="link">
+      <inertial>
+        <mass>1.0</mass>
+        <!--<inertia>
+          <ixx>0.083</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.083</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.083</izz>
+        </inertia>-->
+      </inertial>
+
+      <collision name="plate">
+        <pose>0 0 0.838 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.4 1.033 0.016</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="plate_visual">
+        <pose>0 0 0.838 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.4 1.033 0.016</size>
+          </box>
+        </geometry>
+        <!--
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/White</name>
+          </script>
+        </material>
+        -->
+        <material>
+          <script>
+            <uri>model://table/materials/scripts</uri>
+            <uri>model://table/materials/textures</uri>
+            <name>table_surface</name>
+          </script>
+        </material>
+      </visual>
+
+      <collision name="body">
+        <pose>0 0 0.68 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.4 0.74 0.3</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="body_visual">
+        <pose>0 0 0.68 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.4 0.74 0.3</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+
+      <collision name="leg_front_left">
+        <pose>-0.6225 -0.2925 0.265 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.095 0.095 0.53</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="leg_front_left_visual">
+        <pose>-0.6225 -0.2925 0.265 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.095 0.095 0.53</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+
+      <collision name="leg_front_right">
+        <pose>-0.6225 0.2925 0.265 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.095 0.095 0.53</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="leg_front_right_visual">
+        <pose>-0.6225 0.2925 0.265 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.095 0.095 0.53</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+
+      <collision name="leg_back_left">
+        <pose>0.6225 -0.2925 0.265 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.095 0.095 0.53</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="leg_back_left_visual">
+        <pose>0.6225 -0.2925 0.265 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.095 0.095 0.53</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+
+      <collision name="leg_back_right">
+        <pose>0.6225 0.2925 0.265 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.095 0.095 0.53</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="leg_back_right_visual">
+        <pose>0.6225 0.2925 0.265 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.095 0.095 0.53</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>

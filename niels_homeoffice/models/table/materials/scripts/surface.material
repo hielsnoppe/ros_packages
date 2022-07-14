@@ -1,0 +1,16 @@
+material RepeatedTexture
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        // Relative to the location of the material script
+        texture ../textures/surface.png
+        // Repeat the texture over the surface (1 per face)
+        scale 1.0 1.0
+      }
+    }
+  }
+}

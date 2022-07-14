@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:macro name="niels_desk" params="prefix connected_to">
+
+        <xacro:include filename="$(find niels_homeoffice)/urdf/niels_desk_leg.xacro" />
+
+		<xacro:property name="PI" value="3.14159265359" />
+
+        <xacro:property name="center_x" value="1.000" />
+        <xacro:property name="center_y" value="0.700" />
+
+        <xacro:property name="beam_length_left" value="1.500" />
+        <xacro:property name="beam_length_right" value="1.000" />
+        <xacro:property name="beam_width" value="0.140" />
+        <xacro:property name="beam_height" value="0.040" />
+
+        <xacro:property name="plate_length_left" value="1.200" />
+        <xacro:property name="plate_length_right" value="1.400" />
+        <xacro:property name="plate_width" value="0.800" />
+        <xacro:property name="plate_height" value="0.019" />
+
+		<!-- Links -->
+
+		<link name="${prefix}plate_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="1.2" />
+                <inertia ixx="0.0015" ixy="0.0" ixz="0.0" iyy="0.0015" iyz="0.0" izz="0.0015"/>
+            </inertial>
+            <!-- left -->
+            <visual>
+                <origin xyz="-0.400 0.300 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="${plate_length_left} ${plate_width} ${plate_height}" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="-0.400 0.300 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="${plate_length_left} ${plate_width} ${plate_height}" />
+                </geometry>
+            </collision>
+            <!-- right -->
+            <visual>
+                <origin xyz="0.600 0 0" rpy="0 0 ${PI / 2}" />
+                <geometry>
+                    <box size="${plate_length_right} ${plate_width} ${plate_height}" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.600 0 0" rpy="0 0 ${PI / 2}" />
+                <geometry>
+                    <box size="${plate_length_right} ${plate_width} ${plate_height}" />
+                </geometry>
+            </collision>
+        </link>
+
+        <link name="${prefix}frame_link">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <mass value="0.8" />
+                <inertia ixx="0.0015" ixy="0.0" ixz="0.0" iyy="0.0015" iyz="0.0" izz="0.0015"/>
+            </inertial>
+            <!-- left beam -->
+            <visual>
+                <origin xyz="-0.200 0.300 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="${beam_length_left} ${beam_width} ${beam_height}" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="-0.2000 0.300 0" rpy="0 0 0" />
+                <geometry>
+                    <box size="${beam_length_left} ${beam_width} ${beam_height}" />
+                </geometry>
+            </collision>
+            <!-- right beam -->
+            <visual>
+                <origin xyz="0.600 0 0" rpy="0 0 ${PI / 2}" />
+                <geometry>
+                    <box size="${beam_length_right} ${beam_width} ${beam_height}" />
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0.600 0 0" rpy="0 0 ${PI / 2}" />
+                <geometry>
+                    <box size="${beam_length_right} ${beam_width} ${beam_height}" />
+                </geometry>
+            </collision>
+        </link>
+        <!-- outer left - ->
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box><size>${plate_length} ${plate_width} ${plate_height}</size></box>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box><size>${plate_length} ${plate_width} ${plate_height}</size></box>
+            </geometry>
+        </collision>
+        <!- - outer right left - ->
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box><size>${plate_length} ${plate_width} ${plate_height}</size></box>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box><size>${plate_length} ${plate_width} ${plate_height}</size></box>
+            </geometry>
+        </collision>
+        <!- - outer right right - ->
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box><size>${plate_length} ${plate_width} ${plate_height}</size></box>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <box><size>${plate_length} ${plate_width} ${plate_height}</size></box>
+            </geometry>
+        </collision>
+        -->
+        
+		<!--Joints -->
+        
+		<joint name="${prefix}frame_plate_joint" type="fixed">
+			<parent link="${prefix}frame_link" />
+			<child link="${prefix}plate_link" />
+			<origin xyz="0 0 ${(beam_height + plate_height) / 2}" rpy="0 0 0" />
+		</joint>
+
+        <!--
+        <xacro:desk_leg prefix="" connected_to=""></xacro:desk_leg>
+        <xacro:desk_leg prefix="" connected_to=""></xacro:desk_leg>
+        <xacro:desk_leg prefix="" connected_to=""></xacro:desk_leg>
+        -->
+
+        <gazebo reference="frame_link">
+            <material>Gazebo/Grey</material>
+        </gazebo>
+        <gazebo reference="plate_link">
+            <material>Gazebo/White</material>
+        </gazebo>
+	</xacro:macro>
+</robot>
